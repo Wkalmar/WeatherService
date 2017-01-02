@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace WeatherService.Provider
@@ -36,7 +37,7 @@ namespace WeatherService.Provider
 					Date = Utils.TimestampToDateTime((int)item.SelectToken("dt")),
 					DayTemperature = (int)item.SelectToken("temp.day"),
 					NightTemperature = (int)item.SelectToken("temp.night"),
-					Summary = (string)item.SelectToken("weather.main"),
+					Summary = (string)item.SelectToken("weather[0].main"),
 					WindDirection = Utils.DegreeToDirection((int)item.SelectToken("deg")),
 					WindSpeed = Utils.WindSpeedToDescription((double)item.SelectToken("speed"))
 				});

@@ -2,7 +2,7 @@
 
 namespace WeatherService.Provider
 {
-	interface IWeatherRepository
+	public interface IWeatherRepository
 	{
 		Task<Forecast> GetDailyForecast(string city);
 
