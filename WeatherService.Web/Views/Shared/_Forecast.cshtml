@@ -1,0 +1,46 @@
+﻿@using System.Globalization
+@model WeatherService.Web.ViewModels.WeatherReportViewModel
+
+@{
+    ViewBag.Title = "_ForecastPartial";
+}
+
+<div>
+    Your recent cities:
+    @foreach (var city in @Model.RecentCities)
+    {
+        @Ajax.ActionLink((string)@city, "_Forecast", "Home", 
+            new { city = @city }, 
+            new AjaxOptions { UpdateTargetId = "container" }, 
+            new { @class = "recent-city-link"})
+    }
+</div>
+<div>
+    @if (@Model.Forecast != null)
+    {
+        <div class="forecast-caption">Forecast for @Model.Forecast.City</div>
+        <div>
+            @foreach (var dailyForecast in @Model.Forecast.DailyForecasts)
+            {
+            <div class="daily-forecast-container">
+                <div>
+                    @dailyForecast.Date.ToString("d MMM yyyy", CultureInfo.InvariantCulture)
+                </div>
+                <div class="weather-summary">
+                    @dailyForecast.Summary
+                </div>
+                <div>
+                    @string.Format("Temp: {0} / {1}", dailyForecast.DayTemperature, dailyForecast.NightTemperature)
+                </div>
+                <div>
+                    @string.Format("Wind: {0}", dailyForecast.WindSpeed)
+                </div>
+                <div>
+                    @dailyForecast.WindDirection
+                </div>
+            </div>
+            }
+        </div>
+       
+    }
+</div>

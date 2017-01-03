@@ -2,6 +2,7 @@ using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Unity.Mvc4;
 using WeatherService.Provider;
+using WeatherService.Web.Cache;
 
 namespace WeatherService.Web
 {
@@ -20,6 +21,7 @@ namespace WeatherService.Web
     {
       var container = new UnityContainer();
 	  container.RegisterType<IWeatherRepository, OpenWeatherMapRepository>();
+	  container.RegisterType<ICacheService, CacheService>();
       RegisterTypes(container);
 
       return container;

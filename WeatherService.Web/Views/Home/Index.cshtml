@@ -1,1 +1,14 @@
-﻿
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="container">
+    <div class="invitation">Enter your city:</div>
+    @using (Ajax.BeginForm("_Forecast", "Home", new AjaxOptions { UpdateTargetId = "container" }))
+    {
+        <input type="text" name="city" class="form-control" />
+        <input type="submit" value="View" class="form-control" />
+    }
+    <div id="container">
+        @{Html.RenderAction("_Forecast");}
+    </div>
+</div>
