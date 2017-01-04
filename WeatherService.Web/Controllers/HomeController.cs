@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using WeatherService.Provider;
 using WeatherService.Web.Cache;
+using WeatherService.Web.CookieStorage;
 using WeatherService.Web.Utils;
 using WeatherService.Web.ViewModels;
 
@@ -15,49 +16,30 @@ namespace WeatherService.Web.Controllers
 
 		private readonly ICacheService _cache;
 
+		private readonly ICookieStorage _cookieStorage;
+
 		private const int RecentCitiesCapacity = 5;
 
 		private const string RecentCitiesCookieName = "cookie_recent_cities";
 
-		private const char CitiesSeparator = ',';
-
 		private const string CacheKeyPattern = "forecast{0}";
 
-		public HomeController(ICacheService cache, IWeatherRepository repository)
+		public HomeController(
+			ICacheService cache, IWeatherRepository repository, ICookieStorage cookieStorage)
 		{
 			_repository = repository;
 			_cache = cache;
-		}
-
-		private IEnumerable<string> GetRecentCities()
-		{
-			HttpCookie cookie = HttpContext.Request.Cookies.Get(RecentCitiesCookieName);
-			if (cookie == null)
-			{
-				return new List<string>();
-			}
-			return cookie.Value.Split(CitiesSeparator);
-		}
-
-		private void SaveRecentCities(IEnumerable<string> recentCities)
-		{
-			HttpCookie cookie = HttpContext.Request.Cookies.Get(RecentCitiesCookieName);
-			if (cookie == null)
-			{
-				cookie = new HttpCookie(RecentCitiesCookieName);
-			}
-			cookie.Value = string.Join(CitiesSeparator.ToString(), recentCities);
-			HttpContext.Response.SetCookie(cookie);
+			_cookieStorage = cookieStorage;
 		}
 
 		private void BuildRecentCities(string city, WeatherReportViewModel report)
 		{
-			var recentCities = GetRecentCities();
+			var recentCities = _cookieStorage.GetItems(RecentCitiesCookieName);
 			if (!string.IsNullOrEmpty(city))
 			{
 				recentCities = 
 					LimitedCapacityCollectionHelper.Add(recentCities, city, RecentCitiesCapacity);
-				SaveRecentCities(recentCities);
+				_cookieStorage.SaveItems(recentCities, RecentCitiesCookieName);
 			}
 			report.RecentCities = recentCities;
 		}

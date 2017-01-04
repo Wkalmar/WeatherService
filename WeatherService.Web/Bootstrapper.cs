@@ -3,6 +3,7 @@ using Microsoft.Practices.Unity;
 using Unity.Mvc4;
 using WeatherService.Provider;
 using WeatherService.Web.Cache;
+using WeatherService.Web.CookieStorage;
 
 namespace WeatherService.Web
 {
@@ -22,6 +23,7 @@ namespace WeatherService.Web
       var container = new UnityContainer();
 	  container.RegisterType<IWeatherRepository, OpenWeatherMapRepository>();
 	  container.RegisterType<ICacheService, CacheService>();
+	  container.RegisterType<ICookieStorage, CookieStorage.CookieStorage>();
       RegisterTypes(container);
 
       return container;
