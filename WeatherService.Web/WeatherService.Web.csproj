@@ -177,6 +177,7 @@
     <Compile Include="Cache\ICacheService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\WeatherController.cs" />
+    <Compile Include="Filters\HeaderBasedAuthorizationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

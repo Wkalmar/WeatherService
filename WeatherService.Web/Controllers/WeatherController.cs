@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using WeatherService.Provider;
 using WeatherService.Web.Cache;
+using WeatherService.Web.Filters;
 using WeatherService.Web.Models;
 using DailyForecast = WeatherService.Web.Models.DailyForecast;
 
 namespace WeatherService.Web.Controllers
 {
+	[HeaderBasedAuthorization]
 	public class WeatherController : ApiController
 	{
 		private readonly IWeatherRepository _repository;

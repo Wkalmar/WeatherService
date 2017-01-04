@@ -58,7 +58,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HomeController_Tests.cs" />
     <Compile Include="LimitedCapacityCollectionHelper_Tests.cs" />
     <Compile Include="WeatherController_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
